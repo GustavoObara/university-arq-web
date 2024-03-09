@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import arqweb.aula03.demo.model.Student;
-import arqweb.aula03.demo.service.StudentService;
+import arqweb.aula03.demo.services.StudentService;
 
 import java.util.List;
 

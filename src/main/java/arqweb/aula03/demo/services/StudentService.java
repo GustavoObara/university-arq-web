@@ -1,4 +1,4 @@
-package arqweb.aula03.demo.service;
+package arqweb.aula03.demo.services;
 
 import arqweb.aula03.demo.model.Student;
 import java.util.List;
