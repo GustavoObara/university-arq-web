@@ -1,56 +1,52 @@
-# AULA 4
-##  Inversão de controle e injeção de dependencias
+# AULA 5
+##  API usando JDBC para persistencia
 
-### A classe [Student](/src/main/java/arqweb/aula03/demo/model/Student.java)
+#### O código do banco e tabela do [Postgre] (/src/main/resourses/db/database.sql)
 ```
-    src > main > java >arqweb.aula03.demo > model
-```
-### A classe [StudentController](/src/main/java/arqweb/aula03/demo/controller/StudentController.java) foi adicionada a:
-``` 
-    src > main > java >arqweb.aula03.demo > controller
-```
-
-### A interface [StudentService](/src/main/java/arqweb/aula03/demo/services/StudentService.java) e a classe [StudentServiceImpl](/src/main/java/arqweb/aula03/demo/services/StudentServiceImpl.java) foi adicionada a:
-``` 
-    src > main > java >arqweb.aula03.demo > services
-```
-
-### A interface [StudentRepository](/src/main/java/arqweb/aula03/demo/repository/StudentRepository.java) e a classe [StudentRepositoryImpl](/src/main/java/arqweb/aula03/demo/repository/StudentRepositoryImpl.java) foi adicionada a:
-``` 
-    src > main > java >arqweb.aula03.demo > repository
+    src > main > resourses > db > database.sql
 ```
 <hr>
 
-### Teste 1 GET - Buscar todos Alunos "/students"
-![Teste 1 - GET getStudents](img/getStudents.png)
+### Inserts de dados no banco para testes.
+![Insert](img/insert.png)
 <hr>
 
-### Teste 2 GET - Buscar aluno pelo Id "/students/{id}"
-![Teste 2 - GET getStudentById](img/getStudentById.png)
+### Tabela de estudantes.
+![Table](img/table.png)
 <hr>
 
-### Teste 3 POST - Adicionar aluno "/students/add"
-![Teste 3 - POST](img/postStudent.png)
+### Teste do getAllStudents
+![GetAllStudents](img/getAllStudents.png)
 <hr>
 
-### Verificação Teste 3 GET após o POST
-![Teste 3 - GET getStudents](img/getStudentsAfterPost.png)
+### Teste de getStudentById
+![GetStudentByid](img/getStudentById.png)
 <hr>
 
-### Teste 4 DEL - deletar aluno pelo id "/students/{id}"
-![Teste 4 - DEL deleteStudentById](img/deleteStudentById.png)
+### Teste do CreateStudent
+![CreateStudent](img/createStudent.png)
 <hr>
 
-### Verificação Teste 4 GET após o DEL
-![Teste 4 - DEL getStudents](img/getStudentsAfterDelete.png)
+### Save do Post
+![CreateStudentSave](img/createStudentSave.png)
 <hr>
 
-### Teste 5 PUT - alterar dados do Aluno pelo id "/students/{id}"
-![Teste 5 - PUT updateStudentByID](img/updateStudentById.png)
+### Teste de updateStudentById
+![UpdateStudentById](img/updateStudentById.png)
 <hr>
 
-### Verificação Teste 5 GET após o PUT
-![Teste 5 - GET getStudents](img/getStudentsAfterUpdate.png)
+### Save do updateStudentById
+![UpdateStudentByIdSave](img/updateStudentByIdSave.png)
 <hr>
 
-# Última atualização - 09/03/2024
+### Teste de deleteStudentById
+![DeleteStudentById](img/deleteStudentById.png)
+<hr>
+
+### deleteStudentById
+![DeleteStudentByIdSave](img/deleteStudentByIdSave.png)
+<hr>
+
+
+
+# Última atualização - 21/03/2024

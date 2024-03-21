@@ -30,7 +30,8 @@ public class StudentController {
 
     @PostMapping("/add")
     public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
+        Long id = null;
+        return studentService.createStudent(id,student);
     }
 
     @DeleteMapping("/{id}")

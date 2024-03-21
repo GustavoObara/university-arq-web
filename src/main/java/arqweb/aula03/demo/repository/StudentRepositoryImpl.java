@@ -2,63 +2,67 @@ package arqweb.aula03.demo.repository;
 
 import org.springframework.stereotype.Repository;
 import arqweb.aula03.demo.model.Student;
-import java.util.ArrayList;
+import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
-    private final List<Student> students = new ArrayList<>();
-    private Long nextId;
+    private final JdbcTemplate jdbcTemplate;
 
-    public StudentRepositoryImpl() {
-        students.add(new Student(1L, "Luiz Obara"    , "111.111.111-11", "TEC-ADS" , 21));
-        students.add(new Student(2L, "Júlia Almeida" , "222.222.222-22", "ARQ-URB" , 20));
-        students.add(new Student(3L, "Felipe Lima"   , "333.333.333-33", "TEC-ADS" , 20));
-        students.add(new Student(4L, "Tiago Bernardo", "444.444.444-44", "ENG-PROD", 22));
-        students.add(new Student(5L, "Pedro Mattos"  , "555.555.555-55", "TEC-JGD" , 21));
-        nextId = 6L;
+    public StudentRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<Student> findAll() {
-        return students;
+        return jdbcTemplate.query("SELECT * FROM student", (resultSet, rowNum) ->
+            new Student(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    Student.formatCpf(resultSet.getString("document")),
+                    resultSet.getString("course"),
+                    resultSet.getInt("age")
+            )
+        );
     }
 
     @Override
     public Student findById(Long id) {
-        return students.stream()
-                .filter(student -> student.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        String query = "SELECT * FROM student WHERE id = ?";
+
+        return jdbcTemplate.queryForObject(query, new Object[]{id}, (resultSet,  rowNum) ->
+            new Student(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    Student.formatCpf(resultSet.getString("document")),
+                    resultSet.getString("course"),
+                    resultSet.getInt("age")
+            )
+        );
     }
 
     @Override
-    public Student save(Student student) {
-        if (student.getId() == null) {
-            student.setId(nextId++);
-            students.add(student);
+    public Student save(Long id, Student student) {
+        if (id == null) {
+            String insertQuery = "INSERT INTO public.student (name, document, course, age) VALUES (?, ?, ?, ?)";
+            jdbcTemplate.update(insertQuery, student.getName(), student.getDocument(), student.getCourse(), student.getAge());
         } else {
-            students.removeIf(t -> t.getId().equals(student.getId()));
-            students.add(student);
+            // Sem troca de ID
+            if (this.findById(id) != null) {
+                String updateQuery = "UPDATE public.student SET name = ?, document = ?, course = ?, age = ? WHERE id = ?";
+                jdbcTemplate.update(updateQuery, student.getName(), student.getDocument(), student.getCourse(), student.getAge(), student.getId());
+            } else {
+                throw new IllegalArgumentException("Não existe nenhum estudante com esse registro.");
+            }
         }
         return student;
     }
 
     @Override
     public Student delete(Long id){
-        Student deletedStudent = this.findById(id);
-        if (deletedStudent != null) {
-            students.removeIf(student -> student.getId().equals(id));
-        }
-        return deletedStudent;
-    }
-
-    @Override
-    public Student update(Long id, Student student){
-        Student updateStudent = this.findById(id);
-        if (updateStudent != null) {
-            students.set(students.indexOf(updateStudent), student);
-        }
+        Student student = findById(id);
+        String deleteQuery = "DELETE FROM public.student WHERE id = ?";
+        jdbcTemplate.update(deleteQuery, new Object[]{id});
         return student;
     }
 }

@@ -1,5 +1,7 @@
 package arqweb.aula03.demo.model;
 
+import org.apache.tomcat.util.buf.StringUtils;
+
 public class Student {
     private Long id;
     private String name;
@@ -53,6 +55,10 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public static String formatCpf(String document) {
+        return document.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
     }
 
 }

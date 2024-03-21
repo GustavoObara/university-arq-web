@@ -23,8 +23,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student createStudent(Student student) {
-        return studentRepository.save(student);
+    public Student createStudent(Long id, Student student) {
+        student.setDocument(student.getDocument().replaceAll("[.-]", ""));
+        return studentRepository.save(id, student);
     }
 
     @Override
@@ -34,6 +35,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student updateStudentById(Long id, Student student) {
-        return studentRepository.update(id, student);
+        return studentRepository.save(id, student);
     }
 }
